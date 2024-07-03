@@ -50,7 +50,7 @@ def read_single_city(city_id: int, db: Session = Depends(get_db)):
     return db_city
 
 
-@router.put("/cities/{city_id}", response_model=City)
+@router.put("/cities/{city_id}/", response_model=City)
 def update_city(
     city_id: int,
     city: CityUpdate,
@@ -64,7 +64,7 @@ def update_city(
     return crud.update_city(db=db, city_id=city_id, city=city)
 
 
-@router.delete("/cities/{city_id}", response_model=City)
+@router.delete("/cities/{city_id}/", response_model=City)
 def delete_city(city_id: int, db: Session = Depends(get_db)):
     db_city = crud.get_city(db=db, city_id=city_id)
 
@@ -74,7 +74,7 @@ def delete_city(city_id: int, db: Session = Depends(get_db)):
     return crud.delete_city(db=db, city_id=city_id)
 
 
-@router.post("/temperatures/update")
+@router.post("/temperatures/update/")
 async def update_temperatures(db: Session = Depends(get_db)):
     async with aiohttp.ClientSession() as session:
         cities = crud.get_cities(db=db)
@@ -96,6 +96,6 @@ def read_temperatures(db: Session = Depends(get_db)):
     return crud.get_temperatures(db=db)
 
 
-@router.get("/temperatures/?city_id={city_id}", response_model=list[Temperature])
+@router.get("/temperatures/?city_id={city_id}/", response_model=list[Temperature])
 def read_temperatures_by_city(city_id: int, db: Session = Depends(get_db)):
     return crud.get_temperatures_by_city_id(db=db, city_id=city_id)
